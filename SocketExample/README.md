@@ -34,4 +34,5 @@ Once connected, the client sends some commands such as _getStatus_ and _getResul
 
 ## How to run
 Run `ServerMain` in server side with args: "8080"
+
 Run `Main` in client side with args: "127.0.0.1", "8080"
