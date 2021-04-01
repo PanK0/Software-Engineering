@@ -1,0 +1,30 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Launch ServerMain",
+            "request": "launch",
+            "mainClass": "it.uniroma1.socketserver.ServerMain",
+            "projectName": "SocketExample_9271856b",
+            "args": "8080"
+        },
+        {
+            "type": "java",
+            "name": "Launch ClientMain",
+            "request": "launch",
+            "mainClass": "it.uniroma1.socketclient.Main",
+            "projectName": "SocketExample_9271856b",
+            "args": ["127.0.0.1", "8080"]
+        }
+    ]
+}
