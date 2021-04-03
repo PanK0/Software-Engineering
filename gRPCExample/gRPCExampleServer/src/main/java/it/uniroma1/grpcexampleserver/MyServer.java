@@ -12,6 +12,7 @@ public class MyServer {
                 .addService(new HelloServiceImpl()).build();
 
         server.start();
+        System.out.println("Server is running and waiting for a contact.");
         server.awaitTermination();
     }
 }
