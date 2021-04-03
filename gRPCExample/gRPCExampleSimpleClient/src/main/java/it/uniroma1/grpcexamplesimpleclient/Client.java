@@ -17,8 +17,8 @@ public class Client {
           = HelloServiceGrpc.newBlockingStub(channel);
 
         HelloResponse helloResponse = stub.hello(HelloRequest.newBuilder()
-            .setFirstName("Massimo")
-            .setLastName("Mecella")
+            .setFirstName("Margaret")
+            .setLastName("Hamilton")
             .build());
 
         System.out.println("Response received from server:\n" + helloResponse);

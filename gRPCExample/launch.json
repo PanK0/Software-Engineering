@@ -1,0 +1,25 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Launch MyServer",
+            "request": "launch",
+            "mainClass": "it.uniroma1.grpcexampleserver.MyServer",
+            "projectName": "gRPCExampleServer"
+        },
+        {
+            "type": "java",
+            "name": "Launch Client",
+            "request": "launch",
+            "mainClass": "it.uniroma1.grpcexamplesimpleclient.Client",
+            "projectName": "gRPCExampleSimpleClient"
+        }
+    ]
+}

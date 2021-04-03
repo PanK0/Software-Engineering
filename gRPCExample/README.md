@@ -22,7 +22,7 @@ The concept is that the **interface** is defined in a language indipendent way i
 
 In Java it is needed to implement a class, that is `HelloServiceImpl` that extends `HelloServiceImplBase`.
 
-This is the **directory tree** of the server project:
+This is the **directory tree** of the server project _before_ the Maven precompilation:
 
 ![grpcexampleserver_dirtree](../pics/grpcexampleserver_dirtree.png)
 
@@ -68,26 +68,43 @@ Contains the **main** that creates an object `Server` taken by the package `io.g
 `server.start()` runs the thread implementing the `HelloServiceImol()`. Then it waits for termination.
 
 
-# RUN MINUTE 32:52 LECTURE 24/03/21
-
-
 ## Client
+For the client, the **pom.xml** file is the same as the server.
 
-## How to run
-Must first *precompile*. [HERE](https://www.baeldung.com/maven) is a short tutorial on **Maven**.
+Also the `HelloService.proto` file is the same as the server, because we need to generate the client STUB from the same proto files.
 
-In _Visual Studio Code_ it is sufficient to right click on the project under the _MAVEN_ section and select the commands:
+This is the **directory tree** of the client project _before_ the Maven precompilation:
+
+![grpcexampleclient_dirtree](../pics/grpcexampleclient_dirtree.png)
+
+
+# Class Client
+The client creates a `channel` in which will be sent **strings**, not binary data.
+
+The class `HelloServiceGrpc.HelloServiceBlockingStub` is automatically generated at the **precompilation**.
+
+The **methods** on the STUB are the ones offered by the **interface**.
+
+When invoking the method `hello()` the two fields _firstName_ and _lastName_ are passed. The `helloResponse` is an object from the client side that can be taken by invoking the STUB, and it is hidden behind the scene from the STUB and the Skeleton.
+
+At the end is good to `shutdown()` the channel.
+
+# How to run
+Must first **precompile**. [HERE](https://www.baeldung.com/maven) is a short tutorial on **Maven**.
+
+In _Visual Studio Code_ it is sufficient to right click on the project under the _MAVEN_ section and select the commands. This is an example on how the interface should appear. _(The example is done on the server project, but it is the same as in the client project_)
 
 ![maven menu](../pics/grpcexampleserver_maven_menu.png)
 
 
 **Notes** :
 
-- Be sure that your version of Java is the same as declared in the [pom.xml](pom.xml) file. In my case, in the relative tag `<maven.compiler.source>` I have the value _11_, that is my Java version. To know your Java version run on the terminal `java --version`.
-- First *compile* the build with `mvn compile`.
-- If you want to *test* only, run `mvn test`.
-- Now invoke the *package* phase, which will produce the compiled archive _jar_ file. Run `mvn package`.
-- If you want to *clean* the build, run `mvn clean`.
+- **Repeat the precompilation** both for the server and for the client, since they are two distinct and separate programs to compile.
+- Be sure that your version of Java is the same as declared in the _pom.xml_ file (in both for the client's and for the server's pom files). In my case, in the relative tag `<maven.compiler.source>` I have the value _11_, that is my Java version. To know your Java version run on the terminal `java --version`.
+- First **compile** the build with `mvn compile`.
+- If you want to **test** only, run `mvn test`.
+- Now invoke the **package** phase, which will produce the compiled archive _jar_ file. Run `mvn package`.
+- If you want to **clean** the build, run `mvn clean`.
 
 
-After the precompilation process, **run** the server main. No input args are needed.
+After the precompilation process, **run** the server main and the client main. No input args are needed. A _launch.json_ file is given for _Visual Studio Code_ for both the client and the server.
