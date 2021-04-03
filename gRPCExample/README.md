@@ -1,6 +1,8 @@
 # gRPC Example 
 [gRPC Reference Site](https://grpc.io/)
 
+[Maven tutorial](https://www.baeldung.com/maven) for the **precompilation** (Follow the tutorial and/or the How To Run instructions below)
+
 gRPC is the equivalent of JavaRMI for developing with **Remote Procedure Calls**, with the difference that in gRPC it is used to do a **precompilation** to generate the STUB (the Skeleton on the Server Side) and the Skeleton (STUB on the Client Side).
 
 In JavaRMI the generation of the STUB and the Skeleton is done dinamically at runtime.
@@ -68,7 +70,7 @@ Contains the **main** that creates an object `Server` taken by the package `io.g
 `server.start()` runs the thread implementing the `HelloServiceImol()`. Then it waits for termination.
 
 
-# Client
+# Java Client
 For the client, the **pom.xml** file is the same as the server.
 
 Also the `HelloService.proto` file is the same as the server, because we need to generate the client STUB from the same proto files.
@@ -89,7 +91,26 @@ When invoking the method `hello()` the two fields _firstName_ and _lastName_ are
 
 At the end is good to `shutdown()` the channel.
 
+
+# Python Client
+It is needed to have the **same .proto file** in the python client, that is the same file as for the Java client and server. When used in python, the file will skip the option for _java\_multiple\_files_.
+
+To generate the python client STUB some command line instructions has to be given.
+
+See the How To section or the _README\_4\_precompiling.txt_ file for instructions on what to install to make the client working.
+
+## Script client.py 
+Full path: _gRPCExample/gRPC\_Python\_Client/client.py_
+
+The client has a `run()` function that creates a `channel` to be passed to the constructor of the STUB object.
+
+The `response` is an `HelloRequest` passing as arguments the wanted _firstName_ and _lastName_.
+
+Then the `response.greeting` is printed.
+
 # How to run
+
+## Java Client and Server
 Must first **precompile**. [HERE](https://www.baeldung.com/maven) is a short tutorial on **Maven**.
 
 In _Visual Studio Code_ it is sufficient to right click on the project under the _MAVEN_ section and select the commands. This is an example on how the interface should appear. _(The example is done on the server project, but it is the same as in the client project_)
@@ -108,3 +129,44 @@ In _Visual Studio Code_ it is sufficient to right click on the project under the
 
 
 After the precompilation process, **run** the server main and the client main. No input args are needed. A _launch.json_ file is given for _Visual Studio Code_ for both the client and the server.
+
+## Python Client
+For installing **gRPC runtime** in Python
+
+- upgrade your version of pip:
+
+`$ python3 -m pip install --upgrade pip`
+
+- install gRPC:
+
+`$ python3 -m pip install grpcio`
+
+( or, to install it system wide:
+
+`$ sudo python -m pip install grpcio`
+
+)
+
+- install gRPC tools:
+
+`$ python3 -m pip install grpcio-tools`
+
+
+
+For **compiling a .proto file** (specifically in the example):
+
+`$ python3 -m grpc_tools.protoc --python_out=. --grpc_python_out=. --proto_path=./proto HelloService.proto`
+
+**Explaination of the command**:
+
+- `-m` tells us to use some specific tools that are `grpc_tools.protoc`, that is the **proto compiler**.
+- `--python_out=.` is the current folder, indicated by `.` (dot). He will put the output in the current directory.
+- `--grpc_python_out=.` the output of the generated code is the current directory, indicated by `.` (dot).
+- `--proto_path=./proto` indicates the folder in which to find the proto file.
+- `HelloService.proto` is the name of what has to be compiled.
+
+**After the proto compilation** two files are generated: `HelloService_pb2_grpc.py` and `HelloService_pb2.py` that are the python STUB.
+
+**To run** the python client simply use (while the server is running):
+
+`$ python3 client.py`
