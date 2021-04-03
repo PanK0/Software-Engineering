@@ -68,7 +68,7 @@ Contains the **main** that creates an object `Server` taken by the package `io.g
 `server.start()` runs the thread implementing the `HelloServiceImol()`. Then it waits for termination.
 
 
-## Client
+# Client
 For the client, the **pom.xml** file is the same as the server.
 
 Also the `HelloService.proto` file is the same as the server, because we need to generate the client STUB from the same proto files.
@@ -78,7 +78,7 @@ This is the **directory tree** of the client project _before_ the Maven precompi
 ![grpcexampleclient_dirtree](../pics/grpcexampleclient_dirtree.png)
 
 
-# Class Client
+### Class Client
 The client creates a `channel` in which will be sent **strings**, not binary data.
 
 The class `HelloServiceGrpc.HelloServiceBlockingStub` is automatically generated at the **precompilation**.
