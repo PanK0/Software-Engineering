@@ -5,11 +5,11 @@ On **VisualStudioCode** the launch settings are stored in the [launch.json](laun
 
 This is the **directory tree** of the project:
 
-![6b6b4a5046e6bfa192e13aa65ab16649.png](:/82975a15816a4de3ae9843abea6b3552)
+![dirtree](https://github.com/PanK0/Software-Engineering/blob/main/pics/socketexample_dirtree.png?raw=true)
 
 This is how the **JAVA PROJECTS** section in VisualStudioCode should appear:
 
-![541cae78e4ec422fb1433649a11f2c0e.png](:/7d244f440b60485d935ccc307c16438b)
+![javaprojects](https://github.com/PanK0/Software-Engineering/blob/main/pics/socketexample_project.png?raw=true)
 
 
 ## Server Side
