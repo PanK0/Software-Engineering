@@ -1,15 +1,15 @@
 # SocketExample description
 This project contains a basic example of a client-server communication using sockets.
 
-On VisualStudioCode the launch settings are stored in the [launch.json](launch.json) file in this folder. The important is to pass the right arguments (as follows).
+On **VisualStudioCode** the launch settings are stored in the [launch.json](launch.json) file in this folder.  On **Eclipse** set the configurations in the down arrow next to the *run* button. The important is to pass the right arguments (as follows).
 
 This is the **directory tree** of the project:
 
-![socketexample_directory_tree](../pics/socketexample_dirtree.png)
+![6b6b4a5046e6bfa192e13aa65ab16649.png](:/82975a15816a4de3ae9843abea6b3552)
 
 This is how the **JAVA PROJECTS** section in VisualStudioCode should appear:
 
-![socketexample_project](../pics/socketexample_project.png)
+![541cae78e4ec422fb1433649a11f2c0e.png](:/7d244f440b60485d935ccc307c16438b)
 
 
 ## Server Side
@@ -32,7 +32,23 @@ Class `Main` runs a client that tries to connect to the specified address at the
 
 Once connected, the client sends some commands such as _getStatus_ and _getResult_ to receive the information.
 
+#
+
 ## How to run
+
+### On VSCode (create the file launch.json in the main folder)
 Run `ServerMain` in server side with args: "8080"
 
 Run `Main` in client side with args: "127.0.0.1", "8080"
+
+### On Eclipse
+**Create Configurations**
+- Arrow down next to the run button, then click on *run configurations*
+- Select the project, then the Main Class of the client (for example, for the main file it is in this case it.uniroma1.socketclient.Main)
+- Go on *arguments* and copy :
+	"127.0.0.1" "8080" 
+	With the apices, without commas and with a space between the two arguments
+- Press *Apply* 
+
+**Run Configurations**
+- Arrow down next to the run button, then click on the configuration you want to run
