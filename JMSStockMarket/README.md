@@ -7,6 +7,10 @@ The **JMS Domain** allows to understand the reference of the application.
 
 Her is used **Docker**. It is used to allow multiple applications run on the same server.
 
+This is the **Directory Tree** of the whole application:
+
+![dirtree](https://github.com/PanK0/Software-Engineering/blob/main/pics/jmsstockmarket_dirtree.jpg?raw=true)
+
 # Docker Part - Active MQ for Publish/Subscribe
 On the terminal run `docker pull rmohr/activemq` , that downloads from the registry a container that is called *activemq* .
 
