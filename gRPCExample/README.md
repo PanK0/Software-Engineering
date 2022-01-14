@@ -108,9 +108,8 @@ The `response` is an `HelloRequest` passing as arguments the wanted _firstName_ 
 
 Then the `response.greeting` is printed.
 
-#
 
-## How to run
+# How to run
 
 ## On VSCode
 
