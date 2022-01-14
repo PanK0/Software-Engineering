@@ -9,3 +9,6 @@ Example on how JavaRMI (Remote Method Invocation) works, using a middleware to a
 
 ## gRPCExample
 Example on the use of gRPC middleware. In this example is shown how to run a gRPC server in Java and how to create two clients in two different languages, one in Java and the other in python.
+
+## JMSStockMarket
+Example on how to use a publish/subscribe system using JMS.
