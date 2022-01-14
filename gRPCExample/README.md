@@ -108,9 +108,13 @@ The `response` is an `HelloRequest` passing as arguments the wanted _firstName_ 
 
 Then the `response.greeting` is printed.
 
-# How to run
+#
 
-## Java Client and Server
+## How to run
+
+## On VSCode
+
+### Java Client and Server
 Must first **precompile**. [HERE](https://www.baeldung.com/maven) is a short tutorial on **Maven**.
 
 In _Visual Studio Code_ it is sufficient to right click on the project under the _MAVEN_ section and select the commands. This is an example on how the interface should appear. _(The example is done on the server project, but it is the same as in the client project_)
@@ -130,7 +134,19 @@ In _Visual Studio Code_ it is sufficient to right click on the project under the
 
 After the precompilation process, **run** the server main and the client main. No input args are needed. A _launch.json_ file is given for _Visual Studio Code_ for both the client and the server.
 
-## Python Client
+## On Eclipse
+
+### Java Client and Server
+
+- Right click on the project, go to *Maven*, right arrow and then `Update Project`
+- Right click on the project, go to *Run As*, right arrow and then `Maven Build...`
+- This opens a dialog which allows to define the parameters for the start. Type **the argument of the tag in *goal* in the pomfile. In this case it is `compile`** in the *Goals: field* and press the *Run* button
+- Right click on the project, go to *Run As*, right arrow and then `Maven generate-sources`
+- To **remove** all the generated files, click  on *Maven clean*
+-  **DO THIS FOR BOTH THE CLIENT AND THE SERVER**
+- To **run the application** no arguments are needed. Right click on the server and then on the client, *Run as*, right arrow and click on `Java Application`
+
+## Python Client - indipendently from the IDE
 For installing **gRPC runtime** in Python
 
 - upgrade your version of pip:
