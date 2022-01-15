@@ -11,6 +11,8 @@ This is the **Directory Tree** of the whole application:
 
 ![dirtree](https://github.com/PanK0/Software-Engineering/blob/main/pics/jmsstockmarket_dirtree.jpg?raw=true)
 
+Also here is used **Maven**.
+
 # Docker Part - Active MQ for Publish/Subscribe
 On the terminal run `docker pull rmohr/activemq` , that downloads from the registry a container that is called *activemq* .
 
@@ -107,4 +109,114 @@ The **body** part is the content of the message.
 # Pomfile
 In the pomfile of the client, be sure to include the specified `dependency` for `activemq`.
 
+A simple plugin is able to produce a jar file that is self executable (the given jar file). This plugin in the tag `plugin` is `org.apache.maven.plugin` and it is called maven-assembly-plugin. It creates a .jar file with all the dependencies that are included, so that all the dependencies are built into a standalone jar.
 
+In the `mainClass` tag you should put the main class of your program. In this case it is `it.uniroma1.jmsstockmarketservant.StockMarketServant`.
+
+# JMSStockMarket Servant
+
+## StockMarketServant.java
+
+*JMSStockMarketServant\src\main\java\it\uniroma1\jmsstockmarketservant\StockMarketServant.java*
+
+It starts two JMS clients: one is `NotificatoreAcquisto` and the other is `ProduttoreQuotazioni`.
+
+The  objects are started with the `start()` method. This will make the objects start their job.
+
+## ProduttoreQuotazioni.java
+
+*JMSStockMarketServant\src\main\java\it\uniroma1\jmsstockmarketservant\ProduttoreQuotazioni.java*
+
+This object **publishes** in the queue. So, two libraries are required: `javax.jms.*` , that provides all the interfaces from the midware, and `javax.naming.*` for accessing the JND Service.
+
+These functionalities are provided by the library activemq-all that has the STUB needed to interact with the activemq server.
+
+The class `ProduttoreQuotazioni` is allocated only once in the code. 
+
+In this example **our database is simply an array of strings**, named `titoli[]`. The program will pick a random value from this array and publishes it with the function `scegliTitolo()`. 
+
+The function `valore()` chooses a value to give with the quotation. In the reality, all these three parts should live into a database.
+
+The `Logger` allors to print into the console what is happening.
+
+The `start()` method is the one called by the Servant. Here is the **real interaction** with the JMS Provider.  All the subsequent objects are needed for a JMS connection. In our case the string `destinationName` is *"dynamicTopics/Quotazioni"*
+
+The `Properties` objext `props` is dependant from the specific JMS provider you are using. In *activemq* the string to be used to have an `INITIAL_CONTEXT_FACTORY` is the one stated in the code. For other services that are not *activemq* this string will be different.
+
+The `PROVIDER_URL` in our case is `localhost:61616`, because we are deploying on the same machine. 
+
+Passing the properties to the object `jndiContext`. With this you can lookup for the `connectionfactory` . You need a connection factory to obtain a destination, that we find through the `lookup()` method. Otherwise, in the `catch`, we have an exception raised.
+
+The **final catch** is used to close the connection in any case.
+
+With the `connectionfactory` we can have a `connection` and then a `session`. Now you can create a `producer` for the selected destination.
+
+The `producer` creates a `TextMessage` . The message is then filled into the `while(true)`, bty setting all its properties. The message is sent through the `send()` method, then the servant sleeps and restarts the cycle.
+
+This object `producer` is running in the thread of ProduttoreQuotazioni. 3400
+
+## NotificatoreAcquisto.java
+
+*JMSStockMarketServant\src\main\java\it\uniroma1\jmsstockmarketservant\NotificatoreAcquisto.java*
+
+It is a **subscriber** of the *dynamicTipics/Ordini* topic.
+
+It is also a **publisher**.
+
+When a message is received it randomly takes a decision, then it reads data from the message and then publishes a new message with the same user and the status (if the stocks have been successfully buyied or not).
+
+# JMSStockMarket Client
+
+## Utente.java
+
+Represents an authenticated user. It is a **singleton** instance, because we want only one instance at runtime. We assure this using the method `getInstange()` . At runtime, when we ask for an user, we are returned the authenticated user.
+
+## Quotazione.java
+
+It is what I want to receive from the JNDI. The class implements `Comparable`, means that we have to implement a `compareTo()` and an `equals()` method.
+
+## QuotazioniTableModel.java
+
+The class `QuotazioniTableModel` takes our "database", by recovering messages from the JMS Service, as the `Vector<Quotazione> lista` . In that list will be inserted the received quotations.
+
+## AzioniJMSListener.java
+
+*JMSStockMarketClient\src\main\java\it\uniroma1\jmsstockmarketclient\AzioniJMSListener.java*
+
+Receives the message from the JMS Provider and writes it into the table.
+
+How to implement an object in JMS? You need to implement a **listener** that implements the `MessageListener`, that is the interface.
+
+To receive from a JMS provider we need `topicConnection`, `topicSession`, a `Destination` and a `Producer`. 
+
+I create a `jndiContext` and a `connectionFactory`. Then lookup for the `ConnectionFactory` and , as in the servant, create the connection, the session, and the destination. 
+
+Then must create an object `TopicSubscriber`  to the session to create it over a destination. Here I say that the self object `AzioniJMSLIstener` is the subscriber, so we have to implement the `onMessage()` method.
+
+In the **catch**, each time a message arrives to the client, the *topic subscriber* will invoke the *message listener*, so we'll run an instance of *onMessage()* that will do stuffs. The `onMessage()` takes the properties from the message, then creates a new *quotazione* that is added to my model. Then the view is updated.
+
+## CompraJMSManager.java
+
+*JMSStockMarketClient\src\main\java\it\uniroma1\jmsstockmarketclient\CompraJMSManager.java*
+
+When I push **ordina** on the gui (`CompraListener.java`), the client sends a message to the servant, the servant sends back to the client a message with the confirmation or the negation of the action and the client captures it, showing the response to the user.
+
+In `CompraListener.java`, in the gui, this action is performed by the `CompraJMSManager` object there created. When the data is sent back, the listener asks the JMSManager to perform the buying.
+
+The `CompraJMSManager` is a publisher this time: it needs the same objects for **properties**, address, **initial context**. But now **I use another topic:** `dynamicTopic/Ordini`. The publisher is inside the method `compra()` that asks for some arguments and the user. Then there is the user control.
+
+In the `try` the `TextMessage` is created, with properties like user, name of the stock, price and quantity. After this, i **publish** this message and, to have the answer back, I (`this`) want to be a subscriber of the previous destination, but this time with a filter by passing a query (`String query`) that specifies that I want to know this specific attempt of buying. So I set myself (`this`) as a subscriber. To avoid **race conditions** it is better to first subscribe and then to publish the message.
+
+When the answer to my request for buying arrives I manage it into the `onMessage()` method: we extract a boolean property called *Status* that says whether the buying happened or not.
+
+## StockMarketClient.java
+
+*JMSStockMarketClient\src\main\java\it\uniroma1\jmsstockmarketclient\StockMarketClient.java*
+
+The client just launches an `AzioniFrame`.
+
+# How to run
+
+- Run the docker engine with activemq
+- Run the .jar that starts publishing
+- Run the system
