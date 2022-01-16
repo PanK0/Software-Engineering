@@ -12,3 +12,6 @@ Example on the use of gRPC middleware. In this example is shown how to run a gRP
 
 ## JMSStockMarket
 Example on how to use a publish/subscribe system using JMS.
+
+## SOAP
+Example of a SOAP client-server application with Docker containarization of the web service
