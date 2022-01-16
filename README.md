@@ -15,3 +15,6 @@ Example on how to use a publish/subscribe system using JMS.
 
 ## SOAP
 Example of a SOAP client-server application with Docker containarization of the web service
+
+## REST - with XML
+Simple RESTful service in which data are transferred between client and server in **XML**.
