@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>it.uniroma1</groupId>
+    <artifactId>SOAP-Client</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>16</maven.compiler.source>
+        <maven.compiler.target>16</maven.compiler.target>
+    </properties>
+    <!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->
+<dependencies>
+    <dependency>
+    <groupId>com.sun.xml.ws</groupId>
+    <artifactId>rt</artifactId>
+    <version>2.3.1</version>
+</dependency>
+    <dependency>
+    <groupId>javax.xml.bind</groupId>
+    <artifactId>jaxb-api</artifactId>
+    <version>2.3.1</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/javax.jws/javax.jws-api -->
+<dependency>
+    <groupId>javax.jws</groupId>
+    <artifactId>javax.jws-api</artifactId>
+    <version>1.1</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/javax.xml.ws/jaxws-api -->
+<dependency>
+    <groupId>javax.xml.ws</groupId>
+    <artifactId>jaxws-api</artifactId>
+    <version>2.3.1</version>
+</dependency>
+
+</dependencies>
+<build> 
+    <plugins>
+    <plugin> 
+    <groupId>org.codehaus.mojo</groupId>
+    <artifactId>jaxws-maven-plugin</artifactId>
+    <version>2.6</version>
+    <executions> 
+        <execution> 
+            <id>wsimport-from-jdk</id>
+            <goals>
+                <goal>wsimport</goal>
+            </goals>
+        </execution>
+    </executions>
+    <configuration>
+        <wsdlUrls>
+            <wsdlUrl>http://localhost:8080/WSInterface?wsdl</wsdlUrl> 
+        </wsdlUrls>
+        <keep>true</keep> 
+        <packageName>soapwsclient.generated</packageName> 
+        <sourceDestDir>src/main/java</sourceDestDir>
+    </configuration>
+</plugin>
+</plugins>    
+</build>    
+</project>
