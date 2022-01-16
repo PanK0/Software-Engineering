@@ -18,3 +18,6 @@ Example of a SOAP client-server application with Docker containarization of the 
 
 ## REST - with XML
 Simple RESTful service in which data are transferred between client and server in **XML**.
+
+## REST - with JSON and the use of a DATABASE
+Simple RESTful service in which data are transferred between client and server in **JSON**. The servant uses a **DATABASE** instead of an in-memory data structure.
