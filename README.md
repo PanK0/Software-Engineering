@@ -1,5 +1,5 @@
 # Software-Engineering
-Repository for Software Engineering 
+Repository for some examples from the Software Engineering course.
 
 ## SocketExample
 Simple Java client-server socket communication example.
