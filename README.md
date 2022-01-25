@@ -21,3 +21,9 @@ Simple RESTful service in which data are transferred between client and server i
 
 ## REST - with JSON and the use of a DATABASE
 Simple RESTful service in which data are transferred between client and server in **JSON**. The servant uses a **DATABASE** instead of an in-memory data structure.
+
+###
+
+If you found these notes useful, feel free to [offer me a coffee!](https://www.paypal.com/donate/?hosted_button_id=UCPRD75DKEZ4J)
+
+![paypal](https://github.com/PanK0/Computer-and-Network-Security-Notes/blob/main/QR-Code/qr-code.png?raw=true)
